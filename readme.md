@@ -47,11 +47,11 @@ class BackupCommand extends BaseBackupCommand
 
 ## Contributing
 
-Please feel free to suggest new ideas or send through pull requests to make this better. If you'd like to discuss the project, feel free to reach out on [Twitter](https://twitter.com/timacdonald87). I just throw my ideas for the project in the [issues list](https://github.com/timacdonald/immutable-carbon/issues) if you want to help implement anything.
+Please feel free to suggest new ideas or send through pull requests to make this better. If you'd like to discuss the project, feel free to reach out on [Twitter](https://twitter.com/timacdonald87). I just throw my ideas for the project in the [issues list](https://github.com/timacdonald/multisite-backup-command/issues) if you want to help implement anything.
 
 ## License
 
-This package is under the MIT License. See [LICENSE](https://github.com/timacdonald/immutable-carbon/blob/master/LICENSE) file for details.
+This package is under the MIT License. See [LICENSE](https://github.com/timacdonald/multisite-backup-command/blob/master/LICENSE) file for details.
 
 ## Thanks
 
