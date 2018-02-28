@@ -1,0 +1,26 @@
+{
+    "name": "timacdonald/multisite-backup-command",
+    "description": "A wrapper around spatie/laravel-backup backup command to make it super simple to backup multiple sites on a single server",
+    "keywords": [
+        "backup"
+    ],
+    "type": "utility",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim MacDonald",
+            "email": "tim.mac7@me.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "illuminate/console": "~5.5.0",
+        "illuminate/contracts": "~5.5.0",
+        "spatie/laravel-backup": "^5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "TiMacDonald\\MultisiteBackupCommand\\": "src"
+        }
+    }
+}
