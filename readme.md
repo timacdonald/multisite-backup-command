@@ -1,5 +1,7 @@
 # Multisite Backup Command for spatie/laravel-backup
 
+[![Latest Stable Version](https://poser.pugx.org/timacdonald/multisite-backup-command/v/stable)](https://packagist.org/packages/timacdonald/multisite-backup-command) [![Total Downloads](https://poser.pugx.org/timacdonald/multisite-backup-command/downloads)](https://packagist.org/packages/timacdonald/multisite-backup-command) [![License](https://poser.pugx.org/timacdonald/multisite-backup-command/license)](https://packagist.org/packages/timacdonald/multisite-backup-command)
+
 This command wraps the `spatie/laravel-backup` backup command to make it super simple to backup multiple sites on a single server - from the one Laravel installation. You can read more about is [over on my blog](https://timacdonald.me/backup-multiple-sites-frameworks-laravel-backup/).
 
 ## Installation
