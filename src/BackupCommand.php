@@ -38,7 +38,7 @@ class BackupCommand extends Command
 
     protected function runSingleSiteCommand()
     {
-        collect($this->sites)->each(function ($site) {
+        collect($this->sites())->each(function ($site) {
             $this->setupSingleSiteConfig($site);
             $this->callBackupCommand();
         });
@@ -70,7 +70,7 @@ class BackupCommand extends Command
             return array_merge($this->config->get('backup.monitorBackups.0'), [
                 'name' => $this->siteName($site),
             ]);
-        }, $this->sites);
+        }, $this->sites());
     }
 
     protected function siteName($site)
@@ -97,5 +97,10 @@ class BackupCommand extends Command
             ->filter()
             ->keys()
             ->first() ?? 'run';
+    }
+
+    protected function sites()
+    {
+        return $this->sites;
     }
 }
