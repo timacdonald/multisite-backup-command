@@ -18,9 +18,18 @@
         "illuminate/contracts": "~5.5.0",
         "spatie/laravel-backup": "^5.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^3.5",
+        "phpunit/phpunit": "~6.0"
+    },
     "autoload": {
         "psr-4": {
             "TiMacDonald\\MultisiteBackupCommand\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\MultisiteBackupCommand\\": "tests"
         }
     }
 }
