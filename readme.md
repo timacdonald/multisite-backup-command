@@ -71,7 +71,7 @@ Previously:
 ```php
 protected $sites = [
     [
-        'name' => 'timacdonald.me',
+        'name' => 'https://timacdonald.me',
         'databases' => 'timacdonald_mysql_db',
         'include' => ['storage/app'],
     ],
