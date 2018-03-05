@@ -33,7 +33,7 @@ class BackupCommand extends BaseBackupCommand
 {
     protected $sites = [
         [
-            'domain' => 'timacdonald.com.au',
+            'domain' => 'timacdonald.me',
             'database' => 'timacdonald',
             'paths' => ['storage/app'],
         ],
