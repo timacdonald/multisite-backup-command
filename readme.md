@@ -33,14 +33,17 @@ class BackupCommand extends BaseBackupCommand
 {
     protected $sites = [
         [
-            'domain' => 'timacdonald.me',
-            'database' => 'timacdonald',
-            'paths' => ['storage/app'],
+            'name' => 'My Website',
+            'databases' => [
+                'mysql' => 'timacdonald_mysql_db',
+                'pgsql' => 'timacdonald_pgsql_db',
+            ],
+            'include' => ['timacdonald.me/storage/app'],
         ],
         [
-            'domain' => 'my.wordpress.site.com.au',
-            'database' => 'my_wp_db',
-            'paths' => ['wp-content/uploads'],
+            'name' => 'A Wordpress Website',
+            'databases' => ['mysql' => 'my_wp_db'],
+            'include' => ['wordpress.site.com.au/wp-content/uploads'],
         ],
     ];
 }

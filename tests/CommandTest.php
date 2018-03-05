@@ -12,9 +12,9 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -25,7 +25,7 @@ class CommandTest extends TestCase
         $kernal->call('app:backup', ['--clean' => true]);
 
         $this->assertEquals($command->called, [['command' => 'backup:clean', 'arguments' => []]]);
-        $this->assertEquals($config->get('backup.backup.name'), 'https://timacdonald.me');
+        $this->assertEquals($config->get('backup.backup.name'), 'timacdonald.me');
         $this->assertEquals($config->get('database.connections.mysql.database'), 'timacdonald');
         $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../timacdonald.me/storage/app')]);
     }
@@ -34,14 +34,14 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
             [
-                'domain' => 'spatie.be',
-                'database' => 'spatie',
-                'paths' => ['storage/app/public'],
+                'name' => 'spatie.be',
+                'databases' => ['mysql' => 'spatie'],
+                'include' => ['spatie.be/storage/app/public'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -55,7 +55,7 @@ class CommandTest extends TestCase
             ['command' => 'backup:clean', 'arguments' => []],
             ['command' => 'backup:clean', 'arguments' => []],
         ]);
-        $this->assertEquals($config->get('backup.backup.name'), 'https://spatie.be');
+        $this->assertEquals($config->get('backup.backup.name'), 'spatie.be');
         $this->assertEquals($config->get('database.connections.mysql.database'), 'spatie');
         $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../spatie.be/storage/app/public')]);
     }
@@ -64,14 +64,14 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
             [
-                'domain' => 'spatie.be',
-                'database' => 'spatie',
-                'paths' => ['storage/app/public'],
+                'name' => 'spatie.be',
+                'databases' => ['mysql' => 'spatie'],
+                'include' => ['spatie.be/storage/app/public'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -83,9 +83,9 @@ class CommandTest extends TestCase
         $kernal->call('app:backup', ['--list' => true]);
 
         $this->assertEquals($command->called, [['command' => 'backup:list', 'arguments' => []]]);
-        $template['name'] = 'https://timacdonald.me';
+        $template['name'] = 'timacdonald.me';
         $this->assertEquals($config->get('backup.monitorBackups.0'), $template);
-        $template['name'] = 'https://spatie.be';
+        $template['name'] = 'spatie.be';
         $this->assertEquals($config->get('backup.monitorBackups.1'), $template);
     }
 
@@ -93,14 +93,14 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
             [
-                'domain' => 'spatie.be',
-                'database' => 'spatie',
-                'paths' => ['storage/app/public'],
+                'name' => 'spatie.be',
+                'databases' => ['mysql' => 'spatie'],
+                'include' => ['spatie.be/storage/app/public'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -112,9 +112,9 @@ class CommandTest extends TestCase
         $kernal->call('app:backup', ['--monitor' => true]);
 
         $this->assertEquals($command->called, [['command' => 'backup:monitor', 'arguments' => []]]);
-        $template['name'] = 'https://timacdonald.me';
+        $template['name'] = 'timacdonald.me';
         $this->assertEquals($config->get('backup.monitorBackups.0'), $template);
-        $template['name'] = 'https://spatie.be';
+        $template['name'] = 'spatie.be';
         $this->assertEquals($config->get('backup.monitorBackups.1'), $template);
     }
 
@@ -122,9 +122,9 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -135,7 +135,7 @@ class CommandTest extends TestCase
         $kernal->call('app:backup', ['--run' => true]);
 
         $this->assertEquals($command->called, [['command' => 'backup:run', 'arguments' => []]]);
-        $this->assertEquals($config->get('backup.backup.name'), 'https://timacdonald.me');
+        $this->assertEquals($config->get('backup.backup.name'), 'timacdonald.me');
         $this->assertEquals($config->get('database.connections.mysql.database'), 'timacdonald');
         $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../timacdonald.me/storage/app')]);
     }
@@ -144,14 +144,14 @@ class CommandTest extends TestCase
     {
         TestBackupCommand::setSites([
             [
-                'domain' => 'timacdonald.me',
-                'database' => 'timacdonald',
-                'paths' => ['storage/app'],
+                'name' => 'timacdonald.me',
+                'databases' => ['mysql' => 'timacdonald'],
+                'include' => ['timacdonald.me/storage/app'],
             ],
             [
-                'domain' => 'spatie.be',
-                'database' => 'spatie',
-                'paths' => ['storage/app/public'],
+                'name' => 'spatie.be',
+                'databases' => ['mysql' => 'spatie'],
+                'include' => ['spatie.be/storage/app/public'],
             ],
         ]);
         $config = $this->app->make(Repository::class);
@@ -162,7 +162,7 @@ class CommandTest extends TestCase
         $kernal->call('app:backup', ['--run' => true]);
 
         $this->assertEquals($command->called, [['command' => 'backup:run', 'arguments' => []], ['command' => 'backup:run', 'arguments' => []]]);
-        $this->assertEquals($config->get('backup.backup.name'), 'https://spatie.be');
+        $this->assertEquals($config->get('backup.backup.name'), 'spatie.be');
         $this->assertEquals($config->get('database.connections.mysql.database'), 'spatie');
         $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../spatie.be/storage/app/public')]);
     }

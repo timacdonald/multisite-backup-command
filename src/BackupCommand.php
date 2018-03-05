@@ -2,7 +2,9 @@
 
 namespace TiMacDonald\MultisiteBackupCommand;
 
+use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Config\Repository;
 
 class BackupCommand extends Command
@@ -10,6 +12,8 @@ class BackupCommand extends Command
     protected $config;
 
     protected $sites = [];
+
+    protected $multiSiteConfigTemplate;
 
     public function __construct(Repository $config)
     {
@@ -38,10 +42,10 @@ class BackupCommand extends Command
 
     protected function runSingleSiteCommand()
     {
-        collect($this->sites())->each(function ($site) {
+        foreach ($this->sites() as $site) {
             $this->setupSingleSiteConfig($site);
             $this->callBackupCommand();
-        });
+        }
     }
 
     protected function runMultiSiteCommand()
@@ -52,9 +56,11 @@ class BackupCommand extends Command
 
     protected function setupSingleSiteConfig($site)
     {
-        $this->config->set('backup.backup.name', $this->siteName($site));
+        $this->config->set('backup.backup.name', $site['name']);
 
-        $this->config->set('database.connections.mysql.database', $site['database']);
+        foreach ($site['databases'] as $connection => $name) {
+            $this->config->set("database.connections.{$connection}.database", $name);
+        }
 
         $this->config->set('backup.backup.source.files.include', $this->siteIncludes($site));
     }
@@ -67,22 +73,15 @@ class BackupCommand extends Command
     protected function configForMultiSite()
     {
         return array_map(function ($site) {
-            return array_merge($this->config->get('backup.monitorBackups.0'), [
-                'name' => $this->siteName($site),
-            ]);
+            return array_merge($this->multiSiteConfigTemplate(), Arr::only($site, 'name'));
         }, $this->sites());
-    }
-
-    protected function siteName($site)
-    {
-        return 'https://'.$site['domain'];
     }
 
     protected function siteIncludes($site)
     {
-        return array_map(function ($path) use ($site) {
-            return base_path("../{$site['domain']}/$path");
-        }, $site['paths']);
+        return array_map(function ($include) use ($site) {
+            return base_path("../$include");
+        }, $site['include']);
     }
 
     protected function callBackupCommand()
@@ -92,7 +91,7 @@ class BackupCommand extends Command
 
     protected function backupType()
     {
-        return collect($this->options())
+        return Collection::make($this->options())
             ->only(['run', 'clean', 'list', 'monitor'])
             ->filter()
             ->keys()
@@ -102,5 +101,14 @@ class BackupCommand extends Command
     protected function sites()
     {
         return $this->sites;
+    }
+
+    protected function multiSiteConfigTemplate()
+    {
+        if (! $this->multiSiteConfigTemplate) {
+            $this->multiSiteConfigTemplate = $this->config->get('backup.monitorBackups.0');
+        }
+
+        return $this->multiSiteConfigTemplate;
     }
 }
