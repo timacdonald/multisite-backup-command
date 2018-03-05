@@ -71,9 +71,9 @@ Previously:
 ```php
 protected $sites = [
     [
-        'name' => 'https://timacdonald.me',
-        'databases' => 'timacdonald_mysql_db',
-        'include' => ['storage/app'],
+        'domain' => 'timacdonald.me',
+        'database' => 'timacdonald_mysql_db',
+        'paths' => ['storage/app'],
     ],
 ];
 ```
@@ -83,7 +83,7 @@ Update each site to the following structure:
 ```php
 protected $sites = [
     [
-        'name' => 'timacdonald.me',
+        'name' => 'https://timacdonald.me',
         'databases' => ['mysql' => 'timacdonald_mysql_db'],
         'include' => ['timacdonald.me/storage/app'],
     ],
