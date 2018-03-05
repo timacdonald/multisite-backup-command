@@ -61,3 +61,33 @@ This package is under the MIT License. See [LICENSE](https://github.com/timacdon
 ## Thanks
 
 Big thanks to Spatie for providing such a great backup package!
+
+## v1 to v2 upgrade guide
+
+The structure of the `sites` array has changed. Please update the array and you should be good to go.
+
+Previously:
+
+```php
+protected $sites = [
+    [
+        'name' => 'timacdonald.me',
+        'databases' => 'timacdonald_mysql_db',
+        'include' => ['storage/app'],
+    ],
+];
+```
+
+Update each site to the following structure:
+
+```php
+protected $sites = [
+    [
+        'name' => 'timacdonald.me',
+        'databases' => ['mysql' => 'timacdonald_mysql_db'],
+        'include' => ['timacdonald.me/storage/app'],
+    ],
+];
+```
+
+And your done!
