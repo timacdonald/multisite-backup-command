@@ -50,6 +50,22 @@ class BackupCommand extends BaseBackupCommand
 
 ```
 
+And then you will have to following commands available:
+
+```bash
+# Backup all sites
+php artisan app:backup --run
+
+# Clean all sites
+php artisan app:backup --clean
+
+# List all sites
+php artisan app:backup --list
+
+# Monitor all sites
+php artisan app:backup --monitor
+```
+
 ## Contributing
 
 Please feel free to suggest new ideas or send through pull requests to make this better. If you'd like to discuss the project, feel free to reach out on [Twitter](https://twitter.com/timacdonald87). I just throw my ideas for the project in the [issues list](https://github.com/timacdonald/multisite-backup-command/issues) if you want to help implement anything.
