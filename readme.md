@@ -64,7 +64,7 @@ Big thanks to Spatie for providing such a great backup package!
 
 ## v1 to v2 upgrade guide
 
-The structure of the `sites` array has changed. Please update the array and you should be good to go.
+The structure of the `$sites` array has changed. Please update the array and you should be good to go.
 
 Previously:
 
