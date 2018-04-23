@@ -11,11 +11,7 @@ class CommandTest extends TestCase
     function test_single_site_clean()
     {
         TestBackupCommand::setSites([
-            [
-                'name' => 'timacdonald.me',
-                'databases' => ['mysql' => 'timacdonald'],
-                'include' => ['timacdonald.me/storage/app'],
-            ],
+            ['name' => 'timacdonald.me'],
         ]);
         $config = $this->app->make(Repository::class);
         $kernal = $this->app->make(Kernel::class);
@@ -26,23 +22,13 @@ class CommandTest extends TestCase
 
         $this->assertEquals($command->called, [['command' => 'backup:clean', 'arguments' => []]]);
         $this->assertEquals($config->get('backup.backup.name'), 'timacdonald.me');
-        $this->assertEquals($config->get('database.connections.mysql.database'), 'timacdonald');
-        $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../timacdonald.me/storage/app')]);
     }
 
     function test_mulit_site_clean()
     {
         TestBackupCommand::setSites([
-            [
-                'name' => 'timacdonald.me',
-                'databases' => ['mysql' => 'timacdonald'],
-                'include' => ['timacdonald.me/storage/app'],
-            ],
-            [
-                'name' => 'spatie.be',
-                'databases' => ['mysql' => 'spatie'],
-                'include' => ['spatie.be/storage/app/public'],
-            ],
+            ['name' => 'timacdonald.me'],
+            ['name' => 'spatie.be'],
         ]);
         $config = $this->app->make(Repository::class);
         $kernal = $this->app->make(Kernel::class);
@@ -56,8 +42,6 @@ class CommandTest extends TestCase
             ['command' => 'backup:clean', 'arguments' => []],
         ]);
         $this->assertEquals($config->get('backup.backup.name'), 'spatie.be');
-        $this->assertEquals($config->get('database.connections.mysql.database'), 'spatie');
-        $this->assertEquals($config->get('backup.backup.source.files.include'), [base_path('../spatie.be/storage/app/public')]);
     }
 
     function test_can_list_multiple_sites()

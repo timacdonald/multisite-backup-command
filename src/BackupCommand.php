@@ -13,8 +13,6 @@ class BackupCommand extends Command
 
     protected $sites = [];
 
-    protected $multiSiteConfigTemplate;
-
     public function __construct(Repository $config)
     {
         $this->config = $config;
@@ -28,11 +26,7 @@ class BackupCommand extends Command
 
     public function handle()
     {
-        if ($this->isSingleSiteCommand()) {
-            $this->runSingleSiteCommand();
-            return;
-        }
-        $this->runMultiSiteCommand();
+        $this->isSingleSiteCommand() ? $this->runSingleSiteCommand() : $this->runMultiSiteCommand();
     }
 
     protected function isSingleSiteCommand()
@@ -56,12 +50,27 @@ class BackupCommand extends Command
 
     protected function setupSingleSiteConfig($site)
     {
-        $this->config->set('backup.backup.name', $site['name']);
+        $this->setNameConfig($site);
 
-        foreach ($site['databases'] as $connection => $name) {
+        $this->setDatabaseConfig($site);
+
+        $this->setIncludeConfig($site);
+    }
+
+    protected function setNameConfig($site)
+    {
+        $this->config->set('backup.backup.name', $site['name']);
+    }
+
+    protected function setDatabaseConfig($site)
+    {
+        foreach ($site['databases'] ?? [] as $connection => $name) {
             $this->config->set("database.connections.{$connection}.database", $name);
         }
+    }
 
+    protected function setIncludeConfig($site)
+    {
         $this->config->set('backup.backup.source.files.include', $this->siteIncludes($site));
     }
 
@@ -81,7 +90,7 @@ class BackupCommand extends Command
     {
         return array_map(function ($include) use ($site) {
             return base_path("../$include");
-        }, $site['include']);
+        }, $site['include'] ?? []);
     }
 
     protected function callBackupCommand()
@@ -105,10 +114,6 @@ class BackupCommand extends Command
 
     protected function multiSiteConfigTemplate()
     {
-        if (! $this->multiSiteConfigTemplate) {
-            $this->multiSiteConfigTemplate = $this->config->get('backup.monitorBackups.0');
-        }
-
-        return $this->multiSiteConfigTemplate;
+        return $this->config->get('backup.monitorBackups.0');
     }
 }
