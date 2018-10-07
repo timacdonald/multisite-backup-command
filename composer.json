@@ -2,6 +2,7 @@
     "name": "timacdonald/multisite-backup-command",
     "description": "A wrapper around spatie/laravel-backup backup command to make it super simple to backup multiple sites on a single server",
     "keywords": [
+        "laravel",
         "backup"
     ],
     "type": "utility",
