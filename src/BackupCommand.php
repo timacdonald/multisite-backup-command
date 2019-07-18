@@ -82,7 +82,10 @@ class BackupCommand extends Command
     protected function configForMultiSite()
     {
         return array_map(function ($site) {
-            return array_merge($this->multiSiteConfigTemplate(), Arr::only($site, 'name'));
+            return array_merge(
+                $this->multiSiteConfigTemplate(),
+                Arr::only($site, array_keys($this->multiSiteConfigTemplate()))
+            );
         }, $this->sites());
     }
 
